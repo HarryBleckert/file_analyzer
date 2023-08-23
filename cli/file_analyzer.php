@@ -861,8 +861,8 @@ while ( $count<$limit && $row = pg_fetch_assoc($result) )
 
 if ( $show )
 {	$line .= $tableC;
-	echo $tableC; 
-	file_put_contents ( $tmpout, $line, FILE_APPEND ); 
+	echo $tableC;
+    file_put_contents ( $tmpout, $line, FILE_APPEND );
 	$line = "";
 }
 
