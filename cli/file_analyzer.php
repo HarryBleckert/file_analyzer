@@ -944,8 +944,8 @@ if ( $filterExt !== "pdf" )
 	$line .= $tableC.$tdC.$trC;
 }
 $line .= $tableC;
-
-$time_used = $br."Script execution time: " . number_formatDE((time() - $starttime)/60) . " minutes";
+$time_used = $br."Script execution time: " . number_formatDE(time() - $starttime,0) . " seconds"
+                .;
 $line .= $time_used . "$br";
 // print summary
 echo $line;
