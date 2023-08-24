@@ -459,7 +459,7 @@ if ( $debug ) {
     ini_set("log_errors", 1);
 }	
 // output buffering
-ini_set("output_buffering", 210);
+ini_set("output_buffering", 1200);
 // set timeout  - php-fpm should be set to 0 for request_terminate_timeout
 set_time_limit((3600*8));
 
@@ -700,7 +700,7 @@ function stopWatch() {
     stopwatch.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 }
 function setTimer()
-{	t = setInterval(stopWatch, 1000); }
+{	let timerid = setInterval(stopWatch, 1000); }
 stopWatch();
 setTimer();
 </script>
@@ -720,7 +720,8 @@ $showline = "$table$tr$td$b" . "File Name" ."$bC$tdC$td$b". "Extension" ."$bC$td
 
 @ob_flush();@ob_end_flush();@flush();
 while ( $count<$limit && $row = pg_fetch_assoc($result) )  
-{ 	$count ++;
+{ 	set_time_limit(180);
+    $count ++;
 	$filename = trim( $row['filename'] );
 	$filesize = $row['filesize'];
 	$cHash    = $row['contenthash'];
@@ -966,9 +967,7 @@ if ( $show ) { require_once($tmpout); }
 unlink($tmpout);
 
 ?>
-<script>clearInterval(t);</script>
-<style>
-span.stopwatch span.starteval{display:none;}
-</style>
+<script>clearInterval(timerid);</script>
+<style>#stopwatch, #starteval{display:none;}</style>
 <?php
 HTMLfooter();
