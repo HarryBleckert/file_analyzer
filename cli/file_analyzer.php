@@ -459,7 +459,7 @@ if ( $debug ) {
     ini_set("log_errors", 1);
 }	
 // output buffering
-ini_set("output_buffering", 4096);
+ini_set("output_buffering", 210);
 // set timeout  - php-fpm should be set to 0 for request_terminate_timeout
 set_time_limit((3600*8));
 
