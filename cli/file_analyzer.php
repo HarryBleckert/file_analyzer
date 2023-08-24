@@ -696,11 +696,11 @@ var stopwatch = document.getElementById('stopwatch'),
     seconds = 0, minutes = 0, hours = 0, t;
 function stopWatch() {
     seconds++;
-    if (seconds >= 60) { seconds = 0; minutes++; if (minutes >= 60) { minutes = 0; hours++; } } 
+    if (seconds >= 60) { seconds = 0; minutes++; if (minutes >= 60) { minutes = 0; hours++; } }
     stopwatch.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 }
-function setTimer() 
-{	t = setInterval(stopWatch, 1000); }  
+function setTimer()
+{	t = setInterval(stopWatch, 1000); }
 setTimer();
 </script>
 <?php
@@ -717,6 +717,7 @@ $showline = "$table$tr$td$b" . "File Name" ."$bC$tdC$td$b". "Extension" ."$bC$td
 				( $pdfImage ?"$bC$tdC$tdR$b". "Images" ."$bC$tdC$tdR$b". "PPI":"") ."$bC$tdC$td$b". "Page Size" .
 				"$bC$tdC$trC";
 
+@ob_flush();@ob_end_flush();@flush();@ob_start();
 while ( $count<$limit && $row = pg_fetch_assoc($result) )  
 { 	$count ++;
 	$filename = trim( $row['filename'] );

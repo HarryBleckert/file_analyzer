@@ -57,7 +57,7 @@ $PAGE->set_pagelayout('report');
 //echo !$step ? $output->launcher() : $output->display();
 
 if ( is_siteadmin() ) 
-{	define('NO_OUTPUT_BUFFERING', true);
+{	//define('NO_OUTPUT_BUFFERING', true);
 	require( "./cli/file_analyzer.php"); 
 }
 else
