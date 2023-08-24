@@ -799,7 +799,7 @@ while ( $count<$limit && $row = pg_fetch_assoc($result) )
 		{	$pdfCount ++;
 			$totalPDF += $filesize;
 			$totalPDFpages += $pdfPages;
-			$pdf_versions["$pdfVersion"] ++;	
+			$pdf_versions["$pdfVersion"] ++;
 			$pdf_version_sizes["$pdfVersion"] += $filesize; 
 			$pdf_version_Pages["$pdfVersion"] += $pdfPages;
 			$totalPDFimages += $pdfImages;
