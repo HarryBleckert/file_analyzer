@@ -268,7 +268,7 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	$extPos = strrpos( $filename, ".");
 	$extension = strtolower(substr( basename($filename), $extPos+1 ));
 	$filebase =  substr( basename($filename), 0, $extPos );
-	$tmpfile = $tmpFolder.$filename;
+	$tmpfile = $tmpFolder .str_replace(" ","_", $filename);
 	$ResultsURL .= "tmp/";
 	HTMLheader();
 	//echo "<hr>$tmpfile - $selfFolder - $selfURL - $filename - $extension - $filepath - $mimetype<hr>";	
@@ -279,7 +279,7 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 					"Storage: $filepath<hr>\n";
 	
 	if ( $extension == "pdf" || stristr( $mimetype, "pdf" ) )
-	{	$tmpfile .= str_replace(" ","_", $filename).(stristr( $filename, "pdf")?"":".pdf");
+	{	//$tmpfile .= str_replace(" ","_", $filename).(stristr( $filename, "pdf")?"":".pdf");
 		exec( "cp $filepath \"$tmpfile\"");
 		$ImageData = getPDFImageData( $tmpfile );
 		if ( empty ($ImageData ) )
@@ -303,13 +303,13 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	}
 	elseif ( stristr( $mimetype, "image" ) )
 	{	echo 	$fileInfo;
-		$tmpfile .= str_replace(" ","_", $filename);
+		//$tmpfile .= str_replace(" ","_", $filename);
 		exec( "cp $filepath \"$tmpfile\"");
 		echo '<img src="'.$ResultsURL.basename($tmpfile).'" title="'.$filename.'">'; 
 	}
 	elseif ( stristr( $mimetype, "html" ) || stristr( $mimetype, "csv" ) || $mimetype == "text" )
 	{	echo 	$fileInfo;
-		$tmpfile .= str_replace(" ","_", $filename);
+		//$tmpfile .= str_replace(" ","_", $filename);
 		exec( "cp $filepath \"$tmpfile\"");
 		if ( stristr( $mimetype, "html" ) )
 		{	echo file_get_contents($tmpfile);  }
@@ -319,7 +319,7 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	// Moodle backup file
 	elseif ( $extension == "mbz" )
 	{	echo 	$fileInfo;
-		$tmpfile .= str_replace(" ","_", $filename);
+		//$tmpfile .= str_replace(" ","_", $filename);
 		exec( "cp $filepath \"$tmpfile\"");
 		$results =  shell_exec("/bin/tar -ztvf \"$tmpfile\"");
 		echo nl2br($results);  
@@ -327,10 +327,10 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	// do a unoconv moodle.backup
 	else
 	{	//$filenametmpFile = $tmpfile . str_replace(" ","_", $filename);
-		$tmpfile .= str_replace(" ","_", $filename).".pdf";
+		//$tmpfile .= str_replace(" ","_", $filename).".pdf";
 		$cmd = "export UNO_PATH=/usr/lib/libreoffice;/usr/bin/timeout 120 /usr/bin/unoconv -T120 -l -n -v -f pdf -o \"$tmpfile\" \"$filepath\""; 
 		$results	= shell_exec( $cmd );
-		//echo "<hr>$cmd<br>Results<br>$results<hr>";
+        // echo "<hr>$cmd<br>Results<br>$results<hr>";
 		echo $fileInfo;
 		if ( is_file( $tmpfile ) )
 		{	echo '<embed src="'.$ResultsURL.basename($tmpfile).'" width="100%" height="1700px" />'; }
