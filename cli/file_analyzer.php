@@ -816,8 +816,8 @@ while ( $count<$limit && $row = pg_fetch_assoc($result) )
 		{	echo $b.'<span id="percent" style="font-size:200%;">'.$percent."</span>%".$bC; }
 		else
 		{	echo "<script>document.getElementById('percent').innerHTML = '$percent';</script>"; }
-        print "\n<script>window.scrollTo(0,document.body.scrollHeight);</script>\n";
-        @ob_flush();@ob_end_flush();@flush();
+        // print "\n<script>window.scrollTo(0,document.body.scrollHeight);</script>\n";
+        @ob_flush();@ob_end_flush();@flush();@ob_start();
 
     }
 	if ( $toBeIgnored )
