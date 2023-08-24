@@ -342,7 +342,7 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	}
 	HTMLfooter();
 	//phpinfo();
-	unlink($tmpfile);
+	// done by purge: @unlink($tmpfile);
 	if ( $isCli )
 	{	exit; }
 	else 
