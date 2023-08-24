@@ -47,7 +47,7 @@
 
 
 $AppName = "ASH Moodle File Analyzer";
-$AppVersion = "23.02.09";
+$AppVersion = "23.08.24";
 
 
 $isCli = (php_sapi_name() == "cli");  // cli running
@@ -461,7 +461,7 @@ if ( $debug ) {
 // output buffering
 ini_set("output_buffering", 4096);
 // set timeout  - php-fpm should be set to 0 for request_terminate_timeout
-set_time_limit(3600*8); 
+set_time_limit((3600*8));
 
 
 
@@ -694,7 +694,7 @@ flush();
 <script type="text/javascript">
 var stopwatch = document.getElementById('stopwatch'),
     seconds = 0, minutes = 0, hours = 0, t;
-stopwatch.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+// stopwatch.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 function stopWatch() {
     seconds++;
     if (seconds >= 60) { seconds = 0; minutes++; if (minutes >= 60) { minutes = 0; hours++; } }
@@ -719,7 +719,7 @@ $showline = "$table$tr$td$b" . "File Name" ."$bC$tdC$td$b". "Extension" ."$bC$td
 				( $pdfImage ?"$bC$tdC$tdR$b". "Images" ."$bC$tdC$tdR$b". "PPI":"") ."$bC$tdC$td$b". "Page Size" .
 				"$bC$tdC$trC";
 
-@ob_flush();@ob_end_flush();@flush();@ob_start();
+@ob_flush();@ob_end_flush();@flush();
 while ( $count<$limit && $row = pg_fetch_assoc($result) )  
 { 	$count ++;
 	$filename = trim( $row['filename'] );
@@ -820,7 +820,7 @@ while ( $count<$limit && $row = pg_fetch_assoc($result) )
 		else
 		{	echo "<script>document.getElementById('percent').innerHTML = '$percent';</script>"; }
         // print "\n<script>window.scrollTo(0,document.body.scrollHeight);</script>\n";
-        @ob_flush();@ob_end_flush();@flush();@ob_start();
+        @ob_flush();@ob_end_flush();@flush(); // @ob_start();
 
     }
 	if ( $toBeIgnored )
@@ -862,7 +862,7 @@ while ( $count<$limit && $row = pg_fetch_assoc($result) )
 	if ( !$show )
 	{	$line = ""; }
 	$showline = ""; 
-}
+} // end loop
 
 if ( $show )
 {	$line .= $tableC;
