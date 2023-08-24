@@ -268,10 +268,10 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	$extPos = strrpos( $filename, ".");
 	$extension = strtolower(substr( basename($filename), $extPos+1 ));
 	$filebase =  substr( basename($filename), 0, $extPos );
-	$tmpfile = $tmpFolder .str_replace(" ","_", $filename);
+	$tmpfile = $tmpFolder .str_replace(array(" ",",",":",";"),"_", $filename);
 	$ResultsURL .= "tmp/";
 	HTMLheader();
-	echo "<hr>$tmpfile - $selfFolder - $selfURL - $filename - $extension - $filepath - $mimetype<hr>";
+	// echo "<hr>$tmpfile - $selfFolder - $selfURL - $filename - $extension - $filepath - $mimetype<hr>";
 	$fileInfo = "<h1>File: <b>$filename</b></h1>
 					Author (Moodle): $author - License: $license<br>\n
 					Last modified at: $last_modified".
