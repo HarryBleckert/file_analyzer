@@ -271,7 +271,7 @@ if ( isset( $_REQUEST["file"]) && $_REQUEST["file"] )
 	$tmpfile = $tmpFolder .str_replace(" ","_", $filename);
 	$ResultsURL .= "tmp/";
 	HTMLheader();
-	//echo "<hr>$tmpfile - $selfFolder - $selfURL - $filename - $extension - $filepath - $mimetype<hr>";	
+	echo "<hr>$tmpfile - $selfFolder - $selfURL - $filename - $extension - $filepath - $mimetype<hr>";
 	$fileInfo = "<h1>File: <b>$filename</b></h1>
 					Author (Moodle): $author - License: $license<br>\n
 					Last modified at: $last_modified".
