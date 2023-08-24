@@ -687,7 +687,6 @@ if ( $pdfImage )
 						", book scans with Text/OCR are marked in ".'<b style="color:maroon">maroon'.$bC.$br; 
 	echo $pdfImageNote; 
 }
-flush();
 
 // stopwatch for time elapsed
 ?>
