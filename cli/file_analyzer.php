@@ -694,6 +694,7 @@ flush();
 <script type="text/javascript">
 var stopwatch = document.getElementById('stopwatch'),
     seconds = 0, minutes = 0, hours = 0, t;
+stopwatch.innerHTML = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 function stopWatch() {
     seconds++;
     if (seconds >= 60) { seconds = 0; minutes++; if (minutes >= 60) { minutes = 0; hours++; } }
@@ -701,6 +702,7 @@ function stopWatch() {
 }
 function setTimer()
 {	t = setInterval(stopWatch, 1000); }
+stopWatch();
 setTimer();
 </script>
 <?php
