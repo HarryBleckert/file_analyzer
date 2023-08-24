@@ -461,7 +461,7 @@ if ( $debug ) {
 // output buffering
 ini_set("output_buffering", 1200);
 // set timeout  - php-fpm should be set to 0 for request_terminate_timeout
-set_time_limit((3600*8));
+set_time_limit(300);
 
 
 
@@ -820,7 +820,7 @@ while ( $count<$limit && $row = pg_fetch_assoc($result) )
 		else
 		{	echo "<script>document.getElementById('percent').innerHTML = '$percent';</script>"; }
         // print "\n<script>window.scrollTo(0,document.body.scrollHeight);</script>\n";
-        @ob_flush();@ob_end_flush();@flush(); // @ob_start();
+        @ob_flush();@ob_end_flush();@flush();@ob_start();
 
     }
 	if ( $toBeIgnored )

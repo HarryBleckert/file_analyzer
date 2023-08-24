@@ -24,8 +24,11 @@
  */
 
 // Timeout at 3 hours.
-set_time_limit(60*60*2);
+set_time_limit(300);
 
+if (!defined('NO_OUTPUT_BUFFERING')) {
+    define('NO_OUTPUT_BUFFERING', true);
+}
 require(__DIR__ . '/../../config.php');
 
 // Required files.
