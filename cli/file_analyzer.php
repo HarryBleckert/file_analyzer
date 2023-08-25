@@ -573,7 +573,7 @@ $tableFrom = "{files} AS f";
 // set filters
 $filter = $filterText = "";
 if ( $filterExt )
-{	$filter = " AND f.filename ILIKE  '%.$filterExt' "; 
+{	$filter = " AND f.filename LIKE '%.$filterExt' ";
 	$filterText = $br.$b."Evaluation Filter{$bC}: Files with extension .$filterExt". 
 						 ($pdfBookScannerOnly? " -only PDF files from book scanner"
 					  : ($pdfImageOnly? " -only PDF files with images "
@@ -581,7 +581,7 @@ if ( $filterExt )
 }
 if ( $filterMime )
 {	$filterText = ($filterText?$filterText." AND ":$br."<b>Evaluation Filter</b>: Files with ") . "mimetype = $filterMime";
-	$filter .= " AND f.mimetype iLIKE '%$filterMime%' "; 
+	$filter .= " AND f.mimetype LIKE '%$filterMime%' ";
 }
 if ( $filterDateFrom )
 {	$filterText = ($filterText?$filterText." AND ":$br."<b>Evaluation Filter</b>: Files with ") . "last modification date >= $filterDateFrom";
@@ -597,7 +597,7 @@ if ( $filterUserID )
 }
 if ( $filterFilename )
 {	$filterText = ($filterText?$filterText." AND ":$br."<b>Evaluation Filter</b>: Files with ") . "'$filterFilename' is part of file name";
-	$filter .= " AND f.filename iLIKE '%$filterFilename%' "; 
+	$filter .= " AND f.filename LIKE '%$filterFilename%' ";
 }
 if ( $filterCourseID || $filterCourseShortname )
 {	if ( $filterCourseID )
@@ -634,8 +634,10 @@ $repoRows = $result->count;
 $repoSize = $result->size;
 // now run the main query
 $query = "SELECT * FROM (
-            SELECT DISTINCT(f.contenthash) f.contenthash AS contenthash, f.filename AS filename, f.filesize AS filesize, f.filearea AS filearea,
-			f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, f.author AS author, f.license AS license " .
+            SELECT DISTINCT(f.contenthash) f.contenthash AS contenthash, f.filename AS filename, 
+                           f.filesize AS filesize, f.filearea AS filearea,
+                           f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, 
+                           f.author AS author, f.license AS license " .
 			( stristr( $tableFrom, "inner j") ?", c.idnumber AS idnumber, c.shortname AS shortname ": " ").
 			"FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter ORDER BY f.contenthash ) distinct_hash 
 			ORDER by distinct_hash.$OrderBy DESC;";
