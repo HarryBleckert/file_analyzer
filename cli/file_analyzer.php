@@ -715,7 +715,7 @@ $showline = "$table$tr$td$b" . "File Name" ."$bC$tdC$td$b". "Extension" ."$bC$td
 				"$bC$tdC$trC";
 
 @ob_flush();@ob_end_flush();@flush();
-foreach ( $result AS $row )
+foreach ( $result AS (array) $row )
 { 	set_time_limit(180);
     if ($count>=$limit){
         break;
