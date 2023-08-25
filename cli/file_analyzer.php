@@ -47,7 +47,7 @@
 
 
 $AppName = "ASH Moodle File Analyzer";
-$AppVersion = "23.08.24";
+$AppVersion = "25.08.24";
 
 
 $isCli = (php_sapi_name() == "cli");  // cli running
@@ -527,9 +527,8 @@ elseif ( $isWeb )
 {	echo HTMLheader(); }
 
 
-
+global $DB;
 // connect to database
-$dbconn = pg_connect( "host=$CFG->dbhost dbname=$CFG->dbname user=$CFG->dbuser password=$CFG->dbpass" );
 // db Table(s)
 $tableFrom = "mdl_files f";
 
@@ -549,8 +548,8 @@ if ( $orphaned)
 	}
 	print "${h3}Files in filedir: " .count($output) .$h3C;
 	// get table hashes
-	$query = "SELECT DISTINCT ON (contenthash) AS contenthash FROM mdl_files ORDER BY contenthash ;";
-	$result = pg_query($dbconn, $query);
+	$query = "SELECT DISTINCT ON (contenthash) AS contenthash FROM {files} ORDER BY contenthash ;";
+	$result = $DB->get_records_sql($query);
 	if (!$result) 
 	{	echo "$br$b"."An error occurred with query '$query'$bC$br";
 		if ( $isCli )
@@ -568,10 +567,8 @@ if ( $orphaned)
 
 
 
-// connect to database
-$dbconn = pg_connect( "host=$CFG->dbhost dbname=$CFG->dbname user=$CFG->dbuser password=$CFG->dbpass" );
 // db Table(s)
-$tableFrom = "mdl_files f";
+$tableFrom = "{files} AS f";
 
 // set filters
 $filter = $filterText = "";
@@ -611,11 +608,11 @@ if ( $filterCourseID || $filterCourseShortname )
 	{	$filterText = ($filterText?$filterText." AND ":$br."<b>Evaluation Filter</b>: Files ") . "used by courses with shortname: '$filterCourseShortname'";
 		$filter .= " AND c.shortname = '$filterCourseShortname' "; 
 	}
-	$tableFrom = 	"mdl_files f
-						INNER JOIN mdl_context ct ON f.contextid = ct.id
-						INNER JOIN mdl_resource rs ON ct.instanceid = rs.id
-						INNER JOIN mdl_course c ON rs.course = c.id
-						INNER JOIN mdl_course_modules cm ON c.id = cm.course";
+	$tableFrom = 	"{files} AS f
+						INNER JOIN {context} ct ON f.contextid = ct.id
+						INNER JOIN {resource} rs ON ct.instanceid = rs.id
+						INNER JOIN {course} c ON rs.course = c.id
+						INNER JOIN {course_modules} cm ON c.id = cm.course";
 }
 
 $starttime = time();
@@ -623,9 +620,9 @@ $starttime = time();
 // collect some general data
 $query = "SELECT COUNT(*) AS count, SUM(filesize) as size FROM (
 		 SELECT DISTINCT ON (contenthash) contenthash,filename,filesize,filearea,mimetype,timemodified
-		 FROM mdl_files where filesize>0 AND component != 'core' ORDER BY contenthash ) distinct_hash 
+		 FROM {files} where filesize>0 AND component != 'core' ORDER BY contenthash ) distinct_hash 
 		 ;";
-$result = pg_query($dbconn, $query);
+$result = $DB->get_records_sql($query);
 if (!$result) 
 {	echo "$br$b"."An error occurred with query '$query'$bC$br";
 	if ( $isCli )
@@ -633,19 +630,18 @@ if (!$result)
 	else 
 	{	return; }
 }
-//$repoRows = pg_affected_rows ( $result );
-$row = pg_fetch_assoc($result);
-$repoRows = $row["count"];
-$repoSize = $row["size"];
+
+$repoRows = $result->count;
+$repoSize = $result->size;
 // now run the main query
 $query = "SELECT * FROM (
-SELECT 	DISTINCT ON (f.contenthash) f.contenthash AS contenthash,f.filename AS filename,f.filesize AS filesize,f.filearea AS filearea,
+SELECT DISTINCT ON (f.contenthash) f.contenthash AS contenthash,f.filename AS filename,f.filesize AS filesize,f.filearea AS filearea,
 			f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, f.author AS author, f.license AS license " .
 			( stristr( $tableFrom, "inner j") ?", c.idnumber AS idnumber, c.shortname AS shortname ": " ").
 			"FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter ORDER BY f.contenthash ) distinct_hash 
 			ORDER by distinct_hash.$OrderBy DESC;";
 // 			ORDER by distinct_hash.timemodified DESC;";
-$result = pg_query($dbconn, $query);
+$result = $DB->get_records_sql( $query);
 if (!$result) {
 	echo "$br$b"."An error occurred with query '$query'$bC$br";
 	if ( $isCli )
@@ -654,7 +650,7 @@ if (!$result) {
 	{	return; }
 }
 
-$resultRows = pg_affected_rows ( $result );
+$resultRows = count ( $result );
 $resultRowsPC = round($resultRows/100,0);
 $dataroot = $CFG->dataroot;
 $tmpout = tempnam("/tmp","mdl");
@@ -718,8 +714,11 @@ $showline = "$table$tr$td$b" . "File Name" ."$bC$tdC$td$b". "Extension" ."$bC$td
 				"$bC$tdC$trC";
 
 @ob_flush();@ob_end_flush();@flush();
-while ( $count<$limit && $row = pg_fetch_assoc($result) )  
+foreach ( $ressult AS $row )
 { 	set_time_limit(180);
+    if ($count>=$limit){
+        break;
+    }
     $count ++;
 	$filename = trim( $row['filename'] );
 	$filesize = $row['filesize'];
@@ -873,8 +872,6 @@ if ( $show )
 // sort result arrays
 ksort( $pdf_versions );
 ksort( $mimetypes );
-// close DB connection
-pg_close ( $dbconn );
 echo "<script>document.getElementById('percent').innerHTML = '100';</script>";
 
 // summary data
