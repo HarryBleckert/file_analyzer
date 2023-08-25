@@ -621,7 +621,7 @@ $starttime = time();
 $query = "SELECT COUNT(*) AS count, SUM(filesize) as size FROM (
 		 SELECT DISTINCT(contenthash) contenthash,filename,filesize,filearea,mimetype,timemodified
 		 FROM {files} where filesize>0 AND component != 'core' ORDER BY contenthash ) distinct_hash;";
-$result = $DB->get_records_sql($query);
+$result = $DB->get_record_sql($query);
 if (!$result) 
 {	echo "$br$b"."An error occurred with query '$query'$bC$br";
 	if ( $isCli )
@@ -634,7 +634,7 @@ $repoRows = $result->count;
 $repoSize = $result->size;
 // now run the main query
 $query = "SELECT * FROM (
-SELECT DISTINCT(f.contenthash) f.contenthash AS contenthash,f.filename AS filename,f.filesize AS filesize,f.filearea AS filearea,
+            SELECT DISTINCT(f.contenthash) f.contenthash AS contenthash, f.filename AS filename, f.filesize AS filesize, f.filearea AS filearea,
 			f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, f.author AS author, f.license AS license " .
 			( stristr( $tableFrom, "inner j") ?", c.idnumber AS idnumber, c.shortname AS shortname ": " ").
 			"FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter ORDER BY f.contenthash ) distinct_hash 
