@@ -715,12 +715,13 @@ $showline = "$table$tr$td$b" . "File Name" ."$bC$tdC$td$b". "Extension" ."$bC$td
 				"$bC$tdC$trC";
 
 @ob_flush();@ob_end_flush();@flush();
-foreach ( $result AS (array) $row )
+foreach ( $result AS $rowO )
 { 	set_time_limit(180);
     if ($count>=$limit){
         break;
     }
     $count ++;
+    $row = (array) $rowO;
 	$filename = trim( $row['filename'] );
 	$filesize = $row['filesize'];
 	$cHash    = $row['contenthash'];
