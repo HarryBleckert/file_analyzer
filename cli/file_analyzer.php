@@ -643,7 +643,7 @@ $query = "SELECT * FROM (
 			ORDER by distinct_hash.$OrderBy DESC;";
 // 			ORDER by distinct_hash.timemodified DESC;";
 $result = $DB->get_records_sql( $query);
-if (!$result) {
+if (is_null($result) ) {
 	echo "$br$b"."An error occurred with query '$query'$bC$br";
 	if ( $isCli )
 	{	exit; }
