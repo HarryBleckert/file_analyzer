@@ -71,3 +71,13 @@ else
 
 echo $OUTPUT->footer();
 
+/*
+ *
+ SELECT * FROM (SELECT DISTINCT f.contenthash AS contenthash, f.filename AS filename,f.filesize AS filesize,
+ f.filearea AS filearea, f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid,
+ f.author AS author, f.license AS license
+FROM mdl_files AS f
+where f.filesize>0 AND f.component != 'core'  AND f.timemodified>=1688162400  AND f.timemodified<=1692914400  AND f.filename LIKE '%combined.pdf%'
+ORDER BY f.contenthash ) AS distinct_hash
+ORDER by distinct_hash.timemodified DESC;
+ */

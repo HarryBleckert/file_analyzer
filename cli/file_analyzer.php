@@ -634,12 +634,12 @@ $repoRows = $result->count;
 $repoSize = $result->size;
 // now run the main query
 $query = "SELECT * FROM (
-            SELECT DISTINCT(f.contenthash) f.contenthash AS contenthash, f.filename AS filename, 
+            SELECT DISTINCT f.contenthash AS contenthash, f.filename AS filename, 
                            f.filesize AS filesize, f.filearea AS filearea,
                            f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, 
                            f.author AS author, f.license AS license " .
 			( stristr( $tableFrom, "inner j") ?", c.idnumber AS idnumber, c.shortname AS shortname ": " ").
-			"FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter ORDER BY f.contenthash ) distinct_hash 
+			"FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter ORDER BY f.contenthash ) AS distinct_hash 
 			ORDER by distinct_hash.$OrderBy DESC;";
 // 			ORDER by distinct_hash.timemodified DESC;";
 $result = $DB->get_records_sql( $query);
