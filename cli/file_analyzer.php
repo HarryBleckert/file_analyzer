@@ -236,8 +236,8 @@ function purgeAgedFiles( $outFolder="noWay/",$tmpFolder="noWay/" )
 			{	unlink($filename); }
 		}
 	}
-	if ( $outFolder && ( !isset( $_Cookie["PurgeAgedFiles"] ) || $_Cookie["PurgeAgedFiles"] < time() ) )
-	{	setcookie( "PurgeAgedFiles", time()+$storageTime, strtotime('+2 month') );
+	if ( $outFolder && ( !isset( $_Cookie["PurgeAgedFiles"] ) || $_Cookie["PurgeAgedFiles"] < time() ) ) {
+        @setcookie("PurgeAgedFiles", time() + $storageTime, strtotime('+2 month'));
 		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator( $outFolder, FilesystemIterator::SKIP_DOTS));
 		foreach ( $iterator as $file)
 		{	$filename = $file->getPathname();
@@ -249,7 +249,7 @@ function purgeAgedFiles( $outFolder="noWay/",$tmpFolder="noWay/" )
 	}
 }
 //  end lib functions
-purgeAgedFiles($outFolder, $tmpFolder);
+@purgeAgedFiles($outFolder, $tmpFolder);
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'report_file_analyzer'));
