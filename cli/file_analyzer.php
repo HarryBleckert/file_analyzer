@@ -225,8 +225,8 @@ function purgeAgedFiles( $outFolder="noWay/",$tmpFolder="noWay/" )
 	$storageTime = (60*60*24*80);  // 80 days
 	// cleanup tmp folder
 	$tmpStorage = (60*60*24); // 1 day
-	if ( stristr( $tmpFolder, "tmp/" ) && ( !isset( $_Cookie["tmpStorage"] ) || $_Cookie["tmpStorage"] < time() ) )
-	{	setcookie( "tmpStorage", time()+$tmpStorage, strtotime('+2 days') );
+	if ( stristr( $tmpFolder, "tmp/" ) && ( !isset( $_Cookie["tmpStorage"] ) || $_Cookie["tmpStorage"] < time() ) ) {
+        @setcookie("tmpStorage", time() + $tmpStorage, strtotime('+2 days'));
 		$iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator( $tmpFolder, FilesystemIterator::SKIP_DOTS));
 		foreach ( $iterator as $file)
 		{	$filename = $file->getPathname();
