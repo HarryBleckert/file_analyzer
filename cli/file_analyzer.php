@@ -634,7 +634,7 @@ $repoRows = $result->count;
 $repoSize = $result->size;
 // now run the main query
 $query = "SELECT * FROM (
-            SELECT f.id AS id, DISTINCT(f.contenthash) AS contenthash, f.filename AS filename,  
+            SELECT DISTINCT(f.contenthash) AS contenthash, f.filename AS filename, f.id AS id,   
                            f.filesize AS filesize, f.filearea AS filearea,
                            f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, 
                            f.author AS author, f.license AS license " .
