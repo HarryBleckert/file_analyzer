@@ -633,6 +633,7 @@ if (!$result)
 $repoRows = $result->count;
 $repoSize = $result->size;
 // now run the main query
+/* need to distinguis mysql and postgresql
 $query = "SELECT * FROM (
             SELECT DISTINCT(f.contenthash) contenthash, f.filename AS filename, f.id AS id,   
                            f.filesize AS filesize, f.filearea AS filearea,
@@ -641,7 +642,20 @@ $query = "SELECT * FROM (
 			( stristr( $tableFrom, "inner j") ?", c.idnumber AS idnumber, c.shortname AS shortname ": " ").
 			"FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter ORDER BY f.contenthash ) AS distinct_hash 
 			ORDER by distinct_hash.$OrderBy DESC;";
-// 			ORDER by distinct_hash.timemodified DESC;";
+mysql:
+*/
+$query = "SELECT * FROM (
+            SELECT f.id AS id, f.contenthash AS contenthash, f.filename AS filename,    
+                           f.filesize AS filesize, f.filearea AS filearea,
+                           f.mimetype AS mimetype,f.timemodified AS timemodified, f.userid AS userid, 
+                           f.author AS author, f.license AS license " .
+        (stristr($tableFrom, "inner j") ? ", c.idnumber AS idnumber, c.shortname AS shortname " : " ") .
+        "FROM $tableFrom where f.filesize>0 AND f.component != 'core' $filter 
+        GROUP BY f.contenthash
+        ORDER BY f.contenthash ) AS distinct_hash 
+			ORDER by distinct_hash.$OrderBy DESC;";
+
+
 $result = $DB->get_records_sql( $query);
 if (is_null($result) ) {
 	echo "$br$b"."An error occurred with query '$query'$bC$br";
