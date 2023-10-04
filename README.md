@@ -1,23 +1,23 @@
 # File Analyzer #
 
-File Analyzer is a Report Plugin for Moodle LMS.
-Search Moodle files table using a variety of search filters.
-Files found are save to a PDF file and can also be displayed as a list showing all important file data plus a link to view or download the file.
-
-PDF files can be analysed in detail.
+File Analyzer is a Report Plugin for Moodle LMS.  
+Search Moodle files table using a variety of search filters.  
+Files found are saved to a PDF file and may additionally be displayed as a list showing all important file data plus a link to view or download the file.  
+PDF files can be analyzed in detail.  
 This tool requires Moodle admin privileges.
 
 ## Requirements ##
 
-Moodle 3.x up to 4.x
-Database mySQL (mariadb) or postGreSQL
-PHP 8.x
+Moodle 3.x up to 4.x  
+Database mySQL (mariadb) or postGreSQL  
+PHP 8.x  
 Linux OS
-Command line tools required:
-ack
-libreoffice
-pdfimages and pdfinfo in package poppler-utils
-tar
+
+Command line tools required:   
+ack  
+libreoffice  
+pdfimages and pdfinfo in package poppler-utils   
+tar  
 unoconv
 
 ## License ##

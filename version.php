@@ -14,11 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
- * Plugin version and other meta-data are defined here.
+ * Plugin administration pages are defined here.
+ * This file is a file analyzing tool and report plugin for Moodle - http://moodle.org/
  *
  * @package     report_file_analyzer
- * @copyright   2019 Harry Bleckert for ASH Berlin <Harry.Bleckert@ASH-Berlin.eu>
+ * @category    reports
+ * @copyright   2019 onwards Harry Bleckert for ASH Berlin (Harry.Bleckert@ASH-Berlin.eu)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -17,9 +17,10 @@
 /**
  * Plugin administration pages are defined here.
  * This file is a file analyzing tool and report plugin for Moodle - http://moodle.org/
+ *
  * @package     report_file_analyzer
- * @category    admin
- * @copyright   2019 Harry Bleckert for ASH Berlin <Harry.Bleckert@ASH-Berlin.eu>
+ * @category    reports
+ * @copyright   2019 onwards Harry Bleckert for ASH Berlin (Harry.Bleckert@ASH-Berlin.eu)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 

@@ -1,15 +1,13 @@
 <?php
-// This file is a file analyzing tool and report plugin for Moodle - http://moodle.org/
-//
-//#!/usr/bin/php
-
 /**
+ * Plugin administration pages are defined here.
+ * This file is a file analyzing tool and report plugin for Moodle - http://moodle.org/
  *
- * file name   file_analyzer
- * @category   admin
- * @copyright  2019-2021 Harry Bleckert for ASH Berlin <Harry.Bleckert@ASH-Berlin.eu>
+ * @package     report_file_analyzer
+ * @category    reports
+ * @copyright   2019 onwards Harry Bleckert for ASH Berlin (Harry.Bleckert@ASH-Berlin.eu)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 /*
 
