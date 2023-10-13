@@ -21,7 +21,7 @@
  * @package     report_file_analyzer
  * @category    reports
  * @copyright   2019 onwards Harry Bleckert for ASH Berlin (Harry.Bleckert@ASH-Berlin.eu)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 // Timeout at 3 hours.
